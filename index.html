@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html manifest="itp.manifest">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="format-detection" content="telephone=no">
+		<title>Monopoly online about IT. Tablets friendly.</title>
+		<link rel="stylesheet" type="text/css" href="main.css"/>		
+	</head>
+	<body id="body">
+	<h1 style="position:absolute; left:0; right:0;">Monopoly online. Tablets friendly. IT version.</h1>
+	<!--<script type="text/javascript" src="itpoly-backup.js"></script>-->
+	<script>
+				var currentPlayer=-1;
+		var player = [{ai:false, img:"player1.png", balance:100,lap:0,position:0,name:"Orange",plrnmbr:1, free:true, card:0,term:0},{ai:false, img:"player2.png", balance:100,lap:0,position:0,name:"Pink",plrnmbr:2, free:true, card:0,term:0},
+					  {ai:false, img:"player3.png", balance:100,lap:0,position:0,name:"Green",plrnmbr:3, free:true, card:0,term:0},{ai:false, img:"player4png", balance:100,lap:0,position:0,name:"Blue",plrnmbr:4, free:true, card:0,term:0}];
+		var visC = [0];
+		//add ,rdP:5, prP:5, hrP:5, cP:6, fullset:false
+		var cell = [{owner:0, name:"start", price:null,rdP:1, prP:1, hrP:1, cP:2, fullset:false, rd:0, pr:0, hr:0, c:0, img:"img/start.png",groupn:0, group:"img/dg.png",nmbr:0,mrtgd:false, buyable:false, go:true, cc: false, it:false, ch:false, st:false, pr:false},
+					{owner:0, name:"DELL", price:4,rdP:1, prP:1, hrP:1, cP:2, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/1.png",groupn:1, group:"img/dg.png",nmbr:1,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Dell first opened their \nretail stores in India."},
+					{owner:0, name:"conference", price:null,rdP:1, prP:1, hrP:1, cP:2, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/cc.png",groupn:0, group:"img/dg.png",nmbr:2,mrtgd:false, buyable:false,go:false, cc: true, it:false, ch:false, st:false, pr:false},
+					{owner:0, name:"INFY", price:5,rdP:1, prP:1, hrP:1, cP:2, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/3.png",groupn:1, group:"img/dg.png",nmbr:3,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Infosys was India\'s most\n admired company in \nThe Wall StreetJ Asia since 2000."},
+					{owner:0, name:"income", price:null,rdP:null, prP:null, hrP:null, cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/tax.png",groupn:0, group:"img/dg.png",nmbr:4,mrtgd:false, buyable:false,go:false, cc: false, it:true, ch:false, st:false, pr:false},
+					{owner:0, name:"VZ", price:20,rdP:null, prP:null, hrP:null,cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/5.png",groupn:9, group:"img/dg.png",nmbr:5,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Verizon has been involved\n in several public controversies."},
+					{owner:0, name:"ERIC", price:7,rdP:2, prP:2, hrP:2, cP:3, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/6.png",groupn:2, group:"img/dg.png",nmbr:6,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Ericsson was also the\n inventor of Bluetooth."},
+					{owner:0, name:"chance", price:null,rdP:null, prP:null, hrP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/ch.png",groupn:0, group:"img/dg.png",nmbr:7,mrtgd:false, buyable:false,go:false, cc: false, it:false, ch:true, st:false, pr:false},
+					{owner:0, name:"EMR", price:7,rdP:2, prP:2, hrP:2, cP:3, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/8.png",groupn:2, group:"img/dg.png",nmbr:8,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"It was announced that in 2007\n Emerson will acquire Motorola's ECC."},
+					{owner:0, name:"TXN", price:9,rdP:2, prP:2, hrP:2, cP:3, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/9.png",groupn:2, group:"img/dg.png",nmbr:9,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"The hand-held calculator was\n introduced to the world\n by TI in 1967."},
+					{owner:0, name:"relax", price:null,rdP:null, prP:null, hrP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/relax.png",groupn:0, group:"img/dg.png",nmbr:10,mrtgd:false, buyable:false,go:false, cc: false, it:false, ch:false, st:false, pr:false},
+					{owner:0, name:"TCS", price:11,rdP:3, prP:3, hrP:3, cP:4, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/11.png",groupn:3, group:"img/dg.png",nmbr:11,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"TCS conducts an annual\n quiz called TCS IT Wiz\n for high school students."},
+					{owner:0, name:"IPG", price:10,rdP:null, prP:null, hrP:null,cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/12.png",groupn:10, group:"img/dg.png",nmbr:12,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:" The company's current chairman\n and CEO is Michael I. Roth."},
+					{owner:0, name:"HPQ", price:11,rdP:3, prP:3, hrP:3, cP:4, cP:6, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/13.png",groupn:3, group:"img/dg.png",nmbr:13,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"HP is not affiliated with\n Packard Motor Car Corporation."},
+					{owner:0, name:"EBAY", price:13,rdP:3, prP:3, hrP:3, cP:4, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/14.png",groupn:3,group:"img/dg.png",nmbr:14,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Many unusual items have been\n placed for sale on eBay."},
+					{owner:0, name:"VOD", price:20,rdP:null, prP:null, hrP:null,cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/15.png",groupn:9, group:"img/dg.png",nmbr:15,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Vodafone owns 45% of Verizon Wireless."},
+					{owner:0, name:"700:HK", price:16,rdP:4, prP:4, hrP:4, cP:5, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/16.png",groupn:4, group:"img/dg.png",nmbr:16,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"It operates the well-known\n instant messenger Tencent QQ."},
+					{owner:0, name:"conference", price:null,rdP:null, prP:null, hrP:null, cP:null,fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/cc.png",groupn:0, group:"img/dg.png",nmbr:17,mrtgd:false, buyable:false,go:false, cc: true, it:false, ch:false, st:false, pr:false},
+					{owner:0, name:"EMC", price:16,rdP:4, prP:4, hrP:4, cP:5, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/18.png",groupn:4, group:"img/dg.png",nmbr:18,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Exponent 2 is a reference to\n Albert Einstein's theory."},
+					{owner:0, name:"CAJ", price:19,rdP:4, prP:4, hrP:4, cP:5, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/19.png",groupn:4, group:"img/dg.png",nmbr:19,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"The CACP puts Canon at the\n top of climate-friendly companies."},
+					{owner:0, name:"break", price:null,rdP:null, prP:null, hrP:null, cP:null,fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/break.png",groupn:0, group:"img/dg.png",nmbr:20,mrtgd:false, buyable:false,go:false, cc: false, it:false, ch:false, st:false, pr:false},
+					{owner:0, name:"TSM", price:22,rdP:5, prP:5, hrP:5, cP:6, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/21.png",groupn:5, group:"img/dg.png",nmbr:21,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:" TSMC makes the A5 and \nthe A6 chip for Apple."},
+					{owner:0, name:"chance", price:null,rdP:null, prP:null, hrP:null, cP:null,fullset:false, rd:0, pr:0, hr:0, c:0,img:"img/ch.png",groupn:0, group:"img/dg.png",nmbr:22,mrtgd:false, buyable:false,go:false, cc: false, it:false, ch:true, st:false, pr:false},
+					{owner:0, name:"SAP", price:22,rdP:5, prP:5, hrP:5, cP:6, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/23.png",groupn:5, group:"img/dg.png",nmbr:23,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"SAP is funding a project \nto assess and educate\n Autistic Children."},
+					{owner:0, name:"CSCO", price:24,rdP:5, prP:5, hrP:5, cP:6, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/24.png",groupn:5, group:"img/dg.png",nmbr:24,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:" The company was featured in the film\n Something Ventured(2011)."},
+					{owner:0, name:"ATT", price:20,rdP:null, prP:null, hrP:null, cP:null,fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/25.png",groupn:9, group:"img/dg.png",nmbr:25,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"AT\&T also offers services in many\n locations throughout the Asia Pacific."},
+					{owner:0, name:"QCOM", price:26,rdP:6, prP:6, hrP:6, cP:7, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/26.png",groupn:6, group:"img/dg.png",nmbr:26,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"The current UMTS air interfaces are\n for the most part based\n on Qualcomm patents."},
+					{owner:0, name:"INTC", price:26,rdP:6, prP:6, hrP:6, cP:7, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/27.png",groupn:6, group:"img/dg.png",nmbr:27,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"In 2013 Intel reached a foundry\n agreement to produce chips for Altera."},
+					{owner:0, name:"OMC", price:15,rdP:null, prP:null, hrP:null,cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/28.png",groupn:10, group:"img/dg.png",nmbr:28,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Omnicom Group's subsidiary Ketchum Inc\n and its subsidiary GPlus Europe \nare among the PR agencies used\n by the Russian government."},
+					{owner:0, name:"ORCL", price:29,rdP:6, prP:6, hrP:6, cP:7, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/29.png",groupn:6, group:"img/dg.png",nmbr:29,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"In 2012 the US Government banned\n Oracle from bidding\n for Federal contracts."},
+					{owner:0, name:"#Fail", price:null,rdP:null, prP:null, hrP:null,cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/prison.png",groupn:0, group:"img/dg.png",nmbr:30,mrtgd:false, buyable:false,go:false, cc: false, it:false, ch:false, st:false, pr:true},
+					{owner:0, name:"GOOG", price:32,rdP:7, prP:7, hrP:7, cP:8, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/31.png",groupn:7, group:"img/dg.png",nmbr:31,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Google runs over one million\n servers in data centers\n around the world."},
+					{owner:0, name:"SMSN", price:32,rdP:7, prP:7, hrP:7, cP:8, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/32.png",groupn:7, group:"img/dg.png",nmbr:32,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"The meaning of\n the Korean word \"Samsung\"\n is \"tristar\" or \"three stars\"."},
+					{owner:0, name:"conference", price:null,rdP:null, prP:null, hrP:null,cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/cc.png",groupn:0, group:"img/dg.png",nmbr:33,mrtgd:false, buyable:false,go:false, cc: true, it:false, ch:false, st:false, pr:false},
+					{owner:0, name:"IBM", price:35,rdP:7, prP:7, hrP:7, cP:8, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/34.png",groupn:7, group:"img/dg.png",nmbr:34,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"IBM's \"8-bar\" logo was\n designed in 1972 by Paul Rand."},
+					{owner:0, name:"CHL", price:20,rdP:null, prP:null, hrP:null,cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/35.png",groupn:9, group:"img/dg.png",nmbr:35,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"China Mobile is the world's\n largest mobile phone operator\n by subscribers(Nov 2012)."},
+					{owner:0, name:"chance", price:null,rdP:null, prP:null, hrP:null,cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/ch.png",groupn:0, group:"img/dg.png",nmbr:36,mrtgd:false, buyable:false,go:false, cc: false, it:false, ch:true, st:false, pr:false},
+					{owner:0, name:"MSFT", price:40,rdP:8, prP:8, hrP:8, cP:9, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/37.png",groupn:8, group:"img/dg.png",nmbr:37,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"As of 2013, Microsoft\n is market dominant\n in both the PC OS and\n office suite markets"},
+					{owner:0, name:"super", price:null,rdP:null, prP:null, hrP:null,cP:null, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/tax.png",groupn:0, group:"img/dg.png",nmbr:38,mrtgd:false, buyable:false,go:false, cc: false, it:false, ch:false, st:true, pr:false},
+					{owner:0, name:"AAPL", price:50,rdP:8, prP:8, hrP:8, cP:9, fullset:false, rd:0, pr:0, hr:0,c:0, img:"img/coms/39.png",groupn:8, group:"img/dg.png",nmbr:39,mrtgd:false, buyable:true,go:false, cc: false, it:false, ch:false, st:false, pr:false, fact:"Apple donated $2.5m\n to the American Red Cross\n to aid relief efforts\n after hurricane Sandy."},
+					];
+					/*
+					for (var q = 0; q<cell.length;q++){
+					
+					}
+					*/
+		//Cell's width				
+				var width = 100;
+		//Defining the map
+				var map = document.createElement("div");
+				map.setAttribute("id","map");
+				map.style.height=width*12+22+"px";
+				map.style.width=width*12+22+"px";
+				var body = document.getElementById("body");
+				body.appendChild(map);
+				//4 groups of cells
+				var ct = document.createElement("div");
+				ct.style.height=width+"px";
+				ct.style.float="top";
+				var cl = document.createElement("div");
+				cl.style.width=width+"px";
+				cl.style.left=0;
+				var cr = document.createElement("div");
+				cr.style.width=width+"px";
+				cr.style.position="absolute";
+				cr.style.right=99+"px";
+				var cb = document.createElement("div");
+				cb.style.position="absolute";
+				cb.style.height=width+"px";
+				cb.style.top=width*10+22+"px";
+				map.appendChild(ct);
+				map.appendChild(cr);
+				map.appendChild(cl);
+				map.appendChild(cb);
+				//filling cells
+				for (var q = 20; q<31;q++){
+					var c = document.createElement("div");					
+					c.style.float="left";
+					c.style.width=width+"px";					
+					c.style.height=width+"px";
+					c.setAttribute("id",q);
+					c.setAttribute("class","cell top");
+					ct.appendChild(c);
+					c.innerHTML=cell[q].name;
+					var cH2 = document.createElement("h2");
+					c.appendChild(cH2);
+					if (cell[q].price!=null)
+					cH2.innerHTML=cell[q].price;
+					cH2.setAttribute("class","price");
+					var imga = document.createElement("img");
+					imga.setAttribute("src",cell[q].img);
+					c.appendChild(imga);
+					imga.style.marginBottom="-10px";
+					var group = document.createElement("img");
+					group.setAttribute("src","img/"+cell[q].groupn+"group.png");
+					c.appendChild(group);
+					var pi = document.createElement("img");
+					c.appendChild(pi);
+					pi.setAttribute("src","img/"+cell[q].owner+"lot.png");	
+					
+					
+				}
+				for (var q = 19; q>10;q--){
+					var c = document.createElement("div");
+					c.style.width=width+"px";					
+					c.style.height=width+"px";
+					c.setAttribute("id",q);
+					c.setAttribute("class","cell left");
+					cl.appendChild(c);
+					c.innerHTML=cell[q].name;
+					var cH2 = document.createElement("h2");
+					c.appendChild(cH2);
+					if (cell[q].price!=null)
+					cH2.innerHTML=cell[q].price;
+					cH2.setAttribute("class","price");
+					var imga = document.createElement("img");
+					imga.setAttribute("src",cell[q].img);
+					c.appendChild(imga);
+					imga.style.marginBottom="-10px";
+					var group = document.createElement("img");
+					group.setAttribute("src","img/"+cell[q].groupn+"group.png");
+					c.appendChild(group);
+					var pi = document.createElement("img");
+					c.appendChild(pi);
+					pi.setAttribute("src","img/"+cell[q].owner+"lot.png");	
+				}			
+				for (var q = 31; q<40;q++){
+					var c = document.createElement("div");
+					c.style.width=width+"px";					
+					c.style.height=width+"px";
+					c.setAttribute("class","cell right");
+					c.setAttribute("id",q);
+					cr.appendChild(c);
+					c.innerHTML=cell[q].name;
+					var cH2 = document.createElement("h2");
+					c.appendChild(cH2);
+					if (cell[q].price!=null)
+					cH2.innerHTML=cell[q].price;
+					cH2.setAttribute("class","price");
+					var imga = document.createElement("img");
+					imga.setAttribute("src",cell[q].img);
+					c.appendChild(imga);
+					imga.style.marginBottom="-10px";
+					var group = document.createElement("img");
+					group.setAttribute("src","img/"+cell[q].groupn+"group.png");
+					c.appendChild(group);
+					var pi = document.createElement("img");
+					c.appendChild(pi);
+					pi.setAttribute("src","img/"+cell[q].owner+"lot.png");	
+				}
+				for (var q = 10; q>=0;q--){
+					var c = document.createElement("div");
+					c.style.width=width+"px";					
+					c.style.height=width+"px";
+					c.style.float="left";
+					c.setAttribute("class","cell");
+					c.setAttribute("id",q);
+					cb.appendChild(c);
+					c.innerHTML=cell[q].name;
+					var cH2 = document.createElement("h2");
+					c.appendChild(cH2);
+					if (cell[q].price!=null)
+					cH2.innerHTML=cell[q].price;
+					cH2.setAttribute("class","price");
+					var imga = document.createElement("img");
+					imga.setAttribute("src",cell[q].img);
+					c.appendChild(imga);
+					imga.style.marginBottom="-10px";
+					var group = document.createElement("img");
+					group.setAttribute("src","img/"+cell[q].groupn+"group.png");
+					c.appendChild(group);
+					var pi = document.createElement("img");
+					c.appendChild(pi);
+					pi.setAttribute("src","img/"+cell[q].owner+"lot.png");	
+					c.style.floaat="left";
+				}
+				for (var q=0;q<cell.length;q++){
+					visC[q]=document.getElementById(q);
+				}
+				visC[0].setAttribute("class","cell bl");
+				visC[10].setAttribute("class","cell br");
+				visC[20].setAttribute("class","cell tl");
+				visC[30].setAttribute("class","cell tr");
+				
+		//bar and its elements
+				var bar = document.createElement("div");
+				map.appendChild(bar);
+				bar.setAttribute("id","bar");
+				bar.style.left=width+"px";
+				bar.style.top=width+"px";
+				bar.style.width=width*9+22+"px";
+				bar.style.height=width*9+22+"px";
+				//Left hand side rotate button
+				var rotatel = document.createElement("img");
+				bar.appendChild(rotatel);
+				rotatel.setAttribute("src","img/rotatel.png");
+				var rot=0;
+				function rotateLeft(){
+					rot++;
+					map.style.transform="rotateX(45deg) rotateZ("+90*rot+"deg)";
+					map.style.WebkitTransform="rotateX(45deg) rotateZ("+90*rot+"deg)";
+					bar.style.transform="rotateZ("+(-90*rot)+"deg)";
+					bar.style.WebkitTransform="rotateZ("+(-90*rot)+"deg)";
+				}
+				rotatel.addEventListener("click",rotateLeft,false);
+				rotatel.setAttribute("id","leftRot");
+				//Right hand side rotate button
+				var rotater = document.createElement("img");
+				bar.appendChild(rotater);
+				rotater.setAttribute("src","img/rotater.png");
+				function rotateRight(){
+					rot--;
+					map.style.transform="rotateX(45deg) rotateZ("+90*rot+"deg)";
+					map.style.WebkitTransform="rotateX(45deg) rotateZ("+90*rot+"deg)";
+					bar.style.transform="rotateZ("+(-90*rot)+"deg)";
+					bar.style.WebkitTransform="rotateZ("+(-90*rot)+"deg)";					
+				}
+				rotater.addEventListener("click",rotateRight,false);
+				rotater.setAttribute("id","rightRot");
+				//prison
+				var payout = document.createElement("img");
+				var frdmCard;
+				var justFrom=false;
+				bar.appendChild(payout);
+				payout.setAttribute("src","img/payout.png");
+				payout.style.visibility="hidden";
+				
+				function Payout(p,c){
+				player[currentPlayer%4].free=true;
+				player[currentPlayer%4].balance-=10;
+				document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+				p.style.visibility="hidden";
+				c.style.visibility="hidden";
+				justFrom==true;
+				}
+				payout.addEventListener("click",function(){Payout(payout,frdmCard)},false);
+				payout.setAttribute("id","payout");
+				frdmCard = document.createElement("img");
+				bar.appendChild(frdmCard);
+				frdmCard.setAttribute("src","img/frdmCard.png");
+				frdmCard.style.visibility="hidden";
+				function FrdmCard(p,c){
+				if (player[currentPlayer%4].card==0)
+				return;
+				player[currentPlayer%4].free=true;
+				player[currentPlayer%4].card--;
+				p.style.visibility="hidden";
+				c.style.visibility="hidden";
+				justFrom==true;
+				}
+				
+				frdmCard.addEventListener("click",function(){FrdmCard(payout,frdmCard)},false,false);
+				frdmCard.setAttribute("id","frdmCard");	
+						
+				
+				
+				/*
+				 *Roll
+				 *
+				 *Defines the button and its function.
+				 *Also it operates almost everything. It moves players, decides what to do next and askes other functons, according to a situation.
+				 */
+				 
+				 
+				 var lockDice=2;
+				 //2-for the first time
+				var roll = document.createElement("img");
+				bar.appendChild(roll);
+				roll.setAttribute("src","img/roll.png");
+				function Roll(){
+					n=0;
+					var dice1 = Math.floor(Math.random()*6)+1;
+					var dice2 = Math.floor(Math.random()*6)+1;
+					//if (!player[currentPlayer%4].ai){
+					var dice1v = document.createElement("h4");
+					var dice2v = document.createElement("h4");
+					dice1v.innerHTML=dice1;
+					dice2v.innerHTML=dice2;
+					dice1v.setAttribute("id","dice1v");
+					dice2v.setAttribute("id","dice2v");
+					bar.appendChild(dice1v);
+					bar.appendChild(dice2v);
+					var diceTime= window.setTimeout(function(){bar.removeChild(dice1v);bar.removeChild(dice2v);},speed*2);
+					//}
+				//if in prison
+					if (!player[currentPlayer%4].free){
+						payout.style.visibility="hidden";
+						frdmCard.style.visibility="hidden";
+						if (player[currentPlayer%4].term==0){
+							player[currentPlayer%4].free=true;
+							justFrom==true;
+						}else{
+							if (dice1==dice2){
+								player[currentPlayer%4].free=true;
+								justFrom==true;
+							}else{
+								player[currentPlayer%4].term--;
+								End();
+								return;
+							}
+						}	
+					}
+					if (dice1!=dice2&&lockDice==2||justFrom)
+					lockDice=3; else{ if (dice1==dice2&&lockDice==2&&!justFrom)
+					lockDice =4; else {if (lockDice==3)
+					return; else {if (dice1!=dice2&&lockDice==4)
+					lockDice = 5; else {if (dice1==dice2&&lockDice==4) 
+					lockDice= 6; else {if (lockDice==5)
+					return; else { if (dice1==dice2){
+							player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40+10;
+							visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+							player[currentPlayer%4].free=false;
+							player[currentPlayer%4].term=2;
+							End();
+							return;}
+							else 
+							{lockDice = 5;}
+						}
+					}}}}}
+					
+					var lap = Math.floor(player[currentPlayer%4].position/40);
+					var startPosition = player[currentPlayer%4].position;
+					end.removeEventListener("click",End,false);
+					var stepPause = window.setInterval(function(){Step(dice1,dice2,lap,startPosition,stepPause);},speed);
+				}
+				function Step(dice1,dice2,lap,startPosition,stepPause){
+					visC[player[currentPlayer%4].position%40].removeChild(pPic[currentPlayer%4]);
+					player[currentPlayer%4].position++;
+					visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+					if (dice1+dice2+startPosition<=player[currentPlayer%4].position){
+						clearInterval(stepPause);
+						end.addEventListener("click",End,false);
+						if (lap!=Math.floor(player[currentPlayer%4].position/40)){
+						var bonus=0;
+							for (var q=0;q<cell.length;q++){
+								if (cell[q].owner==currentPlayer%4+1&&cell[q].pr==1)
+									bonus+=2;
+							}
+							player[currentPlayer%4].balance+=10+bonus;
+							document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+						}
+						
+						if (cell[player[currentPlayer%4].position%40].buyable){
+							if (cell[player[currentPlayer%4].position%40].owner==0){
+								if (player[currentPlayer%4].ai){
+									if(player[currentPlayer%4].balance>cell[player[currentPlayer%4].position%40].price)
+										buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);
+									else 
+										Auction(Bwin,0,0,[0],0);							
+								}else{
+								var Bwin=makeAWindow(cell[player[currentPlayer%4].position%40].name);
+								bar.appendChild(Bwin);
+								var Bpic = document.createElement("img");
+								Bpic.setAttribute("src",cell[player[currentPlayer%4].position%40].img);
+								Bwin.appendChild(Bpic);
+								var Btext = document.createElement("p");
+								var Bpre = document.createElement("pre");
+								var BtextN = document.createTextNode("Market value is "+cell[player[currentPlayer%4].position%40].price+
+								".\n\n"+cell[player[currentPlayer%4].position%40].fact+"\n\nresearch&development - "+
+								cell[player[currentPlayer%4].position%40].rdP+"\nproduction - "+
+								cell[player[currentPlayer%4].position%40].prP+"\nhuman resources - "+
+								cell[player[currentPlayer%4].position%40].hrP+"\ncorporation - "+
+								cell[player[currentPlayer%4].position%40].cP);
+								Bpre.appendChild(BtextN);
+								Btext.appendChild(Bpre);
+								Bwin.appendChild(Btext);
+								var Bok = document.createElement("img");
+								Bok.setAttribute("src","img/ok.png");
+								Bwin.appendChild(Bok);
+								var Bback = document.createElement("img");
+								Bback.setAttribute("src","img/back.png");
+								Bwin.appendChild(Bback);
+								Bback.addEventListener("click",function(){Auction(Bwin,0,0,[0],0)},false);
+								Bok.addEventListener("click",function(){buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);},false);
+								
+								}
+							}else{
+								if (!cell[((player[currentPlayer%4].position)%40)].mrtgd){
+									rent = Evaluate();
+									player[currentPlayer%4].balance-=rent;
+									player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance+=rent;
+									
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+									document.getElementById("p"+cell[((player[currentPlayer%4].position)%40)].owner+"cT").innerHTML=player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance.toFixed(2);
+									ifFull();
+									if (player[currentPlayer%4].ai){End();return;}
+								}	
+								
+							}
+							
+						}else{
+							if(cell[player[currentPlayer%4].position%40].cc==true){
+								var x = Math.floor(Math.random()*15);
+									switch (x){
+									case 0: if (!player[currentPlayer%4].ai) 
+									alert("Great! I bet, public could forgive you a fail after that.");
+											player[currentPlayer%4].frdmCard++;
+											break;
+									case 1:if (!player[currentPlayer%4].ai)
+									alert("Anniversary!");
+											player[currentPlayer%4].balance+=8;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											if (0!=currentPlayer%4&&document.getElementById("p"+1+"cT").innerHTML!="broke"){
+											player[0].balance-=2;
+											document.getElementById("p"+1+"cT").innerHTML=player[0].balance.toFixed(2);}
+											if (1!=currentPlayer%4&&document.getElementById("p"+2+"cT").innerHTML!="broke"){
+											player[1].balance-=2;
+											document.getElementById("p"+2+"cT").innerHTML=player[1].balance.toFixed(2);}
+											if (2!=currentPlayer%4&&document.getElementById("p"+3+"cT").innerHTML!="broke"){
+											player[2].balance-=2;
+											document.getElementById("p"+3+"cT").innerHTML=player[2].balance.toFixed(2);}
+											if (3!=currentPlayer%4&&document.getElementById("p"+4+"cT").innerHTML!="broke"){
+											player[3].balance-=2;
+											document.getElementById("p"+4+"cT").innerHTML=player[3].balance.toFixed(2);}
+											break;
+									case 2: if (!player[currentPlayer%4].ai) 
+									alert("What a fail! Social networks are about to blow.");
+											player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40+10;
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											player[currentPlayer%4].free=false;
+											player[currentPlayer%4].term=2;
+											End();
+											return;
+											break;
+									case 3:if (!player[currentPlayer%4].ai) 
+									alert("Pay for your advance.");
+											var prprt =0;
+											for (var q=0;q<40;q++){
+												if (cell[q].owner-1==currentPlayer%4){
+													prprt+=cell[q].hr;
+													prprt+=cell[q].pr;
+													prprt+=cell[q].rd;
+													prprt+=cell[q].c*3;
+												}
+											}
+											player[currentPlayer%4].balance-=(prprt*0.5);
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 4:if (!player[currentPlayer%4].ai) 
+									alert("To go.");
+											player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40;
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											break;
+									case 5:if (!player[currentPlayer%4].ai)
+									alert("Lose 2 instagrams.");
+											player[currentPlayer%4].balance-=2;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 6:if (!player[currentPlayer%4].ai) alert("Get a buck.");
+											player[currentPlayer%4].balance+=1;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 7:if (!player[currentPlayer%4].ai) alert("Lose a buck");
+											player[currentPlayer%4].balance-=1;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 8:if (!player[currentPlayer%4].ai) alert("Get 3 instagrams.");
+											player[currentPlayer%4].balance+=3;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 9:if (!player[currentPlayer%4].ai) alert("Lose 3 instagrams.");
+											player[currentPlayer%4].balance-=3;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 10:if (!player[currentPlayer%4].ai) alert("Get 4 instagrams.");
+											player[currentPlayer%4].balance+=4;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 11:if (!player[currentPlayer%4].ai) alert("Lose 4 instagrams.");
+											player[currentPlayer%4].balance-=4;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 12:if (!player[currentPlayer%4].ai) alert("Get 5 instagrams.");
+											player[currentPlayer%4].balance+=5;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 13:if (!player[currentPlayer%4].ai) alert("Lose 5 instagrams.");
+											player[currentPlayer%4].balance-=5;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 14:if (!player[currentPlayer%4].ai) alert("Get 20instagrams.");
+											player[currentPlayer%4].balance+=20;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									default:break;
+									
+									}
+									
+							}
+							if(cell[player[currentPlayer%4].position%40].ch==true){
+								var x = Math.floor(Math.random()*15);
+									switch (x){
+									case 0: if (!player[currentPlayer%4].ai) 
+									alert("Fantastic! I bet, public could forgive you a fail after that.");
+											player[currentPlayer%4].frdmCard+=1;
+											break;
+									case 1:if (!player[currentPlayer%4].ai) 
+									alert("utility + pay x3");
+											if (player[currentPlayer%4].position%40<12||player[currentPlayer%4].position%40>28){
+											player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40+12;
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											}else{
+											player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40+28;
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											}
+											if(cell[player[currentPlayer%4].position%40].owner==0){
+												if (player[currentPlayer%4].ai){
+													if(player[currentPlayer%4].balance>=cell[player[currentPlayer%4].position%40].price){
+														buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);
+													}else{Auction(Bwin,0,0,[0],0);
+													if (player[currentPlayer%4].ai){End();return;}}
+												}else{
+												var Bwin=makeAWindow(cell[player[currentPlayer%4].position%40].name);
+												bar.appendChild(Bwin);
+												
+												var Bpic = document.createElement("img");
+												Bpic.setAttribute("src",cell[player[currentPlayer%4].position%40].img);
+												Bwin.appendChild(Bpic);
+												var Btext = document.createElement("p");
+												var Bpre = document.createElement("pre");
+												var BtextN = document.createTextNode("Market value is "+cell[player[currentPlayer%4].position%40].price+
+												".\n\n"+cell[player[currentPlayer%4].position%40].fact+"\n\nresearch&development - "+
+												cell[player[currentPlayer%4].position%40].rdP+"\nproduction - "+cell[player[currentPlayer%4].position%40].prP+
+												"\nhuman resources - "+cell[player[currentPlayer%4].position%40].hrP+"\ncorporation - "+cell[player[currentPlayer%4].position%40].cP);
+												Bpre.appendChild(BtextN);
+												Btext.appendChild(Bpre);
+												Bwin.appendChild(Btext);
+												var Bok = document.createElement("img");
+												Bok.setAttribute("src","img/ok.png");
+												Bwin.appendChild(Bok);
+												var Bback = document.createElement("img");
+												Bback.setAttribute("src","img/back.png");
+												Bwin.appendChild(Bback);
+												Bback.addEventListener("click",function(){Auction(Bwin,0,0,[0],0);},false);
+												Bok.addEventListener("click",function(){buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);},false);
+											}}else{
+											  player[currentPlayer%4].balance-=((Math.random()*5+1)/10);
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											}
+											if(player[currentPlayer%4].ai)
+												End();
+											return;
+											break;
+									case 2:if(!player[currentPlayer%4].ai) 
+									alert("Jail");
+											player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40+10;
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											player[currentPlayer%4].free=false;
+											player[currentPlayer%4].term=2;
+											End();
+											return;
+											break;
+									case 3:if (!player[currentPlayer%4].ai) 
+									alert("to 31");
+											player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40+31;
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											if	(cell[player[currentPlayer%4].position%40].owner==0){
+												if (player[currentPlayer%4].ai){
+													if(player[currentPlayer%4].balance>=cell[player[currentPlayer%4].position%40].price){
+														buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);
+													}else{Auction(Bwin,0,0,[0],0);
+													if (player[currentPlayer%4].ai){End();return;}}
+												}else{
+												var Bwin=makeAWindow(cell[player[currentPlayer%4].position%40].name);
+												bar.appendChild(Bwin);
+												var Bpic = document.createElement("img");
+												Bpic.setAttribute("src",cell[player[currentPlayer%4].position%40].img);
+												Bwin.appendChild(Bpic);
+												var Btext = document.createElement("p");
+												var Bpre = document.createElement("pre");
+												var BtextN = document.createTextNode("Market value is "+cell[player[currentPlayer%4].position%40].price+
+												".\n\n"+cell[player[currentPlayer%4].position%40].fact+"\n\nresearch&development - "+
+												cell[player[currentPlayer%4].position%40].rdP+"\nproduction - "+cell[player[currentPlayer%4].position%40].prP+
+												"\nhuman resources - "+cell[player[currentPlayer%4].position%40].hrP+"\ncorporation - "+cell[player[currentPlayer%4].position%40].cP);
+												Bpre.appendChild(BtextN);
+												Btext.appendChild(Bpre);
+												Bwin.appendChild(Btext);
+												var Bok = document.createElement("img");
+												Bok.setAttribute("src","img/ok.png");
+												Bwin.appendChild(Bok);
+												var Bback = document.createElement("img");
+												Bback.setAttribute("src","img/back.png");
+												Bwin.appendChild(Bback);
+												Bback.addEventListener("click",function(){Auction(Bwin,0,0,[0],0)},false);
+												Bok.addEventListener("click",function(){buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);},false);
+											}}else {if (!cell[((player[currentPlayer%4].position)%40)].mrtgd){
+												rent =Evaluate();
+												player[currentPlayer%4].balance-=rent;
+												player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance+=rent;
+												document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+												document.getElementById("p"+cell[((player[currentPlayer%4].position)%40)].owner+"cT").innerHTML=player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance.toFixed(2);
+												
+											}}
+											break;
+									case 4:if (!player[currentPlayer%4].ai)
+									alert("to go");
+											player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40;
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											break;
+									case 5:if (!player[currentPlayer%4].ai) 
+									alert("go back 3");
+											player[currentPlayer%4].position-=3;
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											if (cell[player[currentPlayer%4].position%40].buyable){
+												if	(cell[player[currentPlayer%4].position%40].owner==0){
+													if (player[currentPlayer%4].ai){
+													if(player[currentPlayer%4].balance>=cell[player[currentPlayer%4].position%40].price){
+														buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);
+													}else{Auction(Bwin,0,0,[0],0);
+													if (player[currentPlayer%4].ai){End();return;}}
+												}else{
+													var Bwin=makeAWindow(cell[player[currentPlayer%4].position%40].name);
+													bar.appendChild(Bwin);
+													var Bpic = document.createElement("img");
+													Bpic.setAttribute("src",cell[player[currentPlayer%4].position%40].img);
+													Bwin.appendChild(Bpic);
+													var Btext = document.createElement("p");
+													var Bpre = document.createElement("pre");
+													var BtextN = document.createTextNode("Market value is "+cell[player[currentPlayer%4].position%40].price+
+												".\n\n"+cell[player[currentPlayer%4].position%40].fact+"\n\nresearch&development - "+
+												cell[player[currentPlayer%4].position%40].rdP+"\nproduction - "+cell[player[currentPlayer%4].position%40].prP+
+												"\nhuman resources - "+cell[player[currentPlayer%4].position%40].hrP+"\ncorporation - "+cell[player[currentPlayer%4].position%40].cP);
+													Bpre.appendChild(BtextN);
+													Btext.appendChild(Bpre);
+													Bwin.appendChild(Btext);
+													var Bok = document.createElement("img");
+													Bok.setAttribute("src","img/ok.png");
+													Bwin.appendChild(Bok);
+													var Bback = document.createElement("img");
+													Bback.setAttribute("src","img/back.png");
+													Bwin.appendChild(Bback);
+													Bback.addEventListener("click",function(){Auction(Bwin,0,0,[0],0)},false);
+													Bok.addEventListener("click",function(){buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);},false);
+												}}else {if (!cell[((player[currentPlayer%4].position)%40)].mrtgd){
+													rent = Evaluate();
+													player[currentPlayer%4].balance-=rent;
+													player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance+=rent;
+													document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+													document.getElementById("p"+cell[((player[currentPlayer%4].position)%40)].owner+"cT").innerHTML=player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance.toFixed(2);
+													
+												}}
+											}
+											
+											break;
+									case 6:if (!player[currentPlayer%4].ai) 
+									alert("23+if needed");
+											if (player[currentPlayer%4].position%40>23){
+											player[currentPlayer%4].balance+=20;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance;
+											player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40+23;}else{
+											player[currentPlayer%4].position=Math.ceil(player[currentPlayer%4].position/40)*40+23;}
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											if	(cell[player[currentPlayer%4].position%40].owner==0){
+												if (player[currentPlayer%4].ai){
+													if(player[currentPlayer%4].balance>=cell[player[currentPlayer%4].position%40].price){
+														buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);
+													}else{Auction(Bwin,0,0,[0],0);
+													if (player[currentPlayer%4].ai){End();return;}}
+												}else{
+												var Bwin=makeAWindow(cell[player[currentPlayer%4].position%40].name);
+												bar.appendChild(Bwin);
+												var Bpic = document.createElement("img");
+												Bpic.setAttribute("src",cell[player[currentPlayer%4].position%40].img);
+												Bwin.appendChild(Bpic);
+												var Btext = document.createElement("p");
+												var Bpre = document.createElement("pre");
+												var BtextN = document.createTextNode("Market value is "+cell[player[currentPlayer%4].position%40].price+
+												".\n\n"+cell[player[currentPlayer%4].position%40].fact+"\n\nresearch&development - "+
+												cell[player[currentPlayer%4].position%40].rdP+"\nproduction - "+cell[player[currentPlayer%4].position%40].prP+
+												"\nhuman resources - "+cell[player[currentPlayer%4].position%40].hrP+"\ncorporation - "+cell[player[currentPlayer%4].position%40].cP);
+												Bpre.appendChild(BtextN);
+												Btext.appendChild(Bpre);
+												Bwin.appendChild(Btext);
+												var Bok = document.createElement("img");
+												Bok.setAttribute("src","img/ok.png");
+												Bwin.appendChild(Bok);
+												var Bback = document.createElement("img");
+												Bback.setAttribute("src","img/back.png");
+												Bwin.appendChild(Bback);
+												Bback.addEventListener("click",function(){Auction(Bwin,0,0,[0],0)},false);
+												Bok.addEventListener("click",function(){buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);},false);
+											}}else {if (!cell[((player[currentPlayer%4].position)%40)].mrtgd){
+												rent = Evaluate();
+												player[currentPlayer%4].balance-=rent;
+												player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance+=rent;
+												document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+												document.getElementById("p"+cell[((player[currentPlayer%4].position)%40)].owner+"cT").innerHTML=player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance.toFixed(2);
+											}}
+											break;
+									case 7:if (!player[currentPlayer%4].ai)
+									alert("repairs");
+											var prprt =0;
+											for (var q=0;q<40;q++){
+												if (cell[q].owner-1==currentPlayer%4){
+													prprt+=cell[q].hr;
+													prprt+=cell[q].pr;
+													prprt+=cell[q].rd;
+													prprt+=cell[q].c*4;
+												}
+											}
+											player[currentPlayer%4].balance-=(prprt/2.0);
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 8:if (!player[currentPlayer%4].ai) 
+									alert("Pay everyone");
+											player[currentPlayer%4].balance-=6;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											if (0!=currentPlayer%4&&document.getElementById("p"+1+"cT").innerHTML!="broke"){
+											player[0].balance+=2;
+											document.getElementById("p"+1+"cT").innerHTML=player[0].balance.toFixed(2);}
+											if (1!=currentPlayer%4&&document.getElementById("p"+2+"cT").innerHTML!="broke"){
+											player[1].balance+=2;
+											document.getElementById("p"+2+"cT").innerHTML=player[1].balance.toFixed(2);}
+											if (2!=currentPlayer%4&&document.getElementById("p"+3+"cT").innerHTML!="broke"){
+											player[2].balance+=2;
+											document.getElementById("p"+3+"cT").innerHTML=player[2].balance.toFixed(2);}
+											if (3!=currentPlayer%4&&document.getElementById("p"+4+"cT").innerHTML!="broke"){
+											player[3].balance+=2;
+											document.getElementById("p"+4+"cT").innerHTML=player[3].balance.toFixed(2);}
+											break;
+									case 9:if (!player[currentPlayer%4].ai) 
+									alert("to 5+needed");
+											if (player[currentPlayer%4].position%40>5){
+											player[currentPlayer%4].balance+=20;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance;}
+											player[currentPlayer%4].position=Math.ceil(player[currentPlayer%4].position/40)*40+5;
+											visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+											if	(cell[player[currentPlayer%4].position%40].owner==0){
+												if (player[currentPlayer%4].ai){
+													if(player[currentPlayer%4].balance>=cell[player[currentPlayer%4].position%40].price){
+														buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);
+													}else{Auction(Bwin,0,0,[0],0);
+													if (player[currentPlayer%4].ai){End();return;}}
+												}else{
+												var Bwin=makeAWindow(cell[player[currentPlayer%4].position%40].name);
+												bar.appendChild(Bwin);
+												var Bpic = document.createElement("img");
+												Bpic.setAttribute("src",cell[player[currentPlayer%4].position%40].img);
+												Bwin.appendChild(Bpic);
+												var Btext = document.createElement("p");
+												var Bpre = document.createElement("pre");
+												var BtextN = document.createTextNode("Market value is "+cell[player[currentPlayer%4].position%40].price+
+												".\n\n"+cell[player[currentPlayer%4].position%40].fact+"\n\nresearch&development - "+
+												cell[player[currentPlayer%4].position%40].rdP+"\nproduction - "+cell[player[currentPlayer%4].position%40].prP+
+												"\nhuman resources - "+cell[player[currentPlayer%4].position%40].hrP+"\ncorporation - "+cell[player[currentPlayer%4].position%40].cP);
+												Bpre.appendChild(BtextN);
+												Btext.appendChild(Bpre);
+												Bwin.appendChild(Btext);
+												var Bok = document.createElement("img");
+												Bok.setAttribute("src","img/ok.png");
+												Bwin.appendChild(Bok);
+												var Bback = document.createElement("img");
+												Bback.setAttribute("src","img/back.png");
+												Bwin.appendChild(Bback);
+												Bback.addEventListener("click",function(){Auction(Bwin,0,0,[0],0)},false);
+												Bok.addEventListener("click",function(){buy(Bwin,player[currentPlayer%4],cell[player[currentPlayer%4].position%40]);},false);
+											}}else {if (!cell[((player[currentPlayer%4].position)%40)].mrtgd){
+												rent = Evaluate();
+											
+												player[currentPlayer%4].balance-=rent;
+												player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance+=rent;
+												
+												document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+												document.getElementById("p"+cell[((player[currentPlayer%4].position)%40)].owner+"cT").innerHTML=player[cell[((player[currentPlayer%4].position)%40)].owner-1].balance.toFixed(2);
+												
+											}}
+											break;
+									case 10:if (!player[currentPlayer%4].ai) 
+									alert("get 40 instagrams");
+											player[currentPlayer%4].balance+=4;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 11:if (!player[currentPlayer%4].ai) alert("lose 40 instagrams");
+											player[currentPlayer%4].balance-=4;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 12:if (!player[currentPlayer%4].ai) alert("get 50 instagrams");
+											player[currentPlayer%4].balance+=5;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 13:if (!player[currentPlayer%4].ai) alert("lose 50 instagrams");
+											player[currentPlayer%4].balance-=5;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									case 14:if (!player[currentPlayer%4].ai) alert("get 200 instagrams");
+											player[currentPlayer%4].balance+=20;
+											document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+											break;
+									default:break;
+									}
+							}
+							if(cell[player[currentPlayer%4].position%40].go==true){
+								player[currentPlayer%4].balance+=10;
+								document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+							}
+							if(cell[player[currentPlayer%4].position%40].pr==true){
+								player[currentPlayer%4].position=Math.floor(player[currentPlayer%4].position/40)*40+10;
+								visC[player[currentPlayer%4].position%40].appendChild(pPic[currentPlayer%4]);
+								player[currentPlayer%4].free=false;
+								player[currentPlayer%4].term=2;
+								End();
+								return;
+							}
+							if(cell[player[currentPlayer%4].position%40].it==true){
+								player[currentPlayer%4].balance-=10;
+								document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+							}
+							if(cell[player[currentPlayer%4].position%40].st==true){
+								player[currentPlayer%4].balance-=20;
+								document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+								
+							}
+							if (player[currentPlayer%4].ai){End();}
+						}
+					}
+				}
+					
+				
+				
+				
+				roll.setAttribute("id","roll");
+				/*
+				 *end
+				 *
+				 *
+				 */
+				var end= document.createElement("img");
+				bar.appendChild(end);
+				end.setAttribute("src","img/end.png");
+				end.setAttribute("id","end");
+				var  lost = [0];
+				function Bankrupt(){
+					var answer = false;
+					for(var l=1;l<lost.length;l++){
+						if (lost[l]==currentPlayer%4)
+							answer=true;
+					}
+					return answer;
+				}
+				function Inheritance(){
+					var whose = player[currentPlayer%4];
+					var who = cell[player[currentPlayer%4].position%40].owner;
+					for (var d = 0; d<40;d++){
+						if (cell[d].owner==whose.plrnmbr){
+							cell[d].owner=who;
+							visC[d].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.setAttribute("src","img/"+who+"lot.png");
+						}
+					}
+				}
+				function End(){
+					if (currentPlayer!=-1&&player[currentPlayer%4].balance<0){
+						if (player[currentPlayer%4].ai){
+							lost[lost.length]=currentPlayer%4;
+							visC[player[currentPlayer%4].position%40].removeChild(pPic[currentPlayer%4]);
+							Inheritance();
+							document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML="broke";
+							ifFull();
+						}else{
+							if(confirm("Do you confirm that you are a bancroft?")){
+								lost[lost.length]=currentPlayer%4;
+								visC[player[currentPlayer%4].position%40].removeChild(pPic[currentPlayer%4]);
+								Inheritance();
+								ifFull();
+								document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML="broke";
+							}else{
+							return;
+							}
+						}
+						if (lost.length==4){
+							alert("gg, game over!");
+							window.location.reload();
+						}	
+					}
+					if (currentPlayer!=-1&&player[currentPlayer%4].ai&&!Bankrupt()&&lockDice!=2){
+						if(lockDice%2==0){
+							Roll();
+							return;
+						}	
+					}
+					if(currentPlayer!=-1)
+					document.getElementsByClassName("p"+(currentPlayer%4+1)+"c")[0].style.border="none";
+					do{currentPlayer++;
+					}while(Bankrupt())
+					document.getElementsByClassName("p"+(currentPlayer%4+1)+"c")[0].style.border="1px solid";
+					
+					lockDice=2;
+					save.removeEventListener("click",SaveW,false);
+					roll.removeEventListener("click",Roll,false);
+					trade.removeEventListener("click",Trade,false);
+					manage.removeEventListener("click",Manage,false);
+					if (player[currentPlayer%4].ai==false){
+					var nextPlayerW = makeAWindow(player[currentPlayer%4].name+", your turn!");
+					var nextOk = document.createElement("img");
+					bar.appendChild(nextPlayerW);
+					nextPlayerW.appendChild(nextOk);
+					nextOk.setAttribute("src","img/ok.png");
+					nextPlayerW.setAttribute("id","nextPlayer");
+					nextOk.addEventListener("click",function(){bar.removeChild(nextPlayerW);
+					save.addEventListener("click",SaveW,false);
+					roll.addEventListener("click",Roll,false);
+					trade.addEventListener("click",Trade,false);
+					manage.addEventListener("click",Manage,false);					
+					},false);
+					}
+					if (!player[currentPlayer%4].free&&player[currentPlayer%4].term!=0){
+					payout.style.visibility="visible";	
+					frdmCard.style.visibility="visible";	
+					}
+					if (player[currentPlayer%4].ai==true){
+						Roll();
+					}
+				}
+				
+				
+				
+				//
+				var info = document.createElement("img");
+				bar.appendChild(info);
+				info.setAttribute("src","img/info.png");
+				function Info(){
+					var Iwin = makeAWindow("About this game");
+					bar.appendChild(Iwin);
+					var Iback = document.createElement("img");
+					Iback.setAttribute("src","img/back.png");
+					Iback.style.position="absolute";
+					Iback.style.top=20+"%";
+					Iback.style.right=0;
+					Iwin.appendChild(Iback);
+					Iback.addEventListener("click",function(){bar.removeChild(Iwin);},false);
+					var Ipre = document.createElement("pre");
+					var Itext = document.createElement("p");
+					Itext.appendChild(Ipre);
+					Iwin.appendChild(Itext);
+					Ipre.innerHTML="Hello!\nThe game's made by Herman Starikov.\nYou can send your thoughts to\n itmonopoly at gmail dot com.";
+					
+					var Pdiv5 = document.createElement("div");
+					var Ph5 = document.createElement("h2");
+					Ph5.innerHTML="time of  a step";
+					Ph5.setAttribute("id","speed");
+					var speedRange = document.createElement("input");
+					speedRange.setAttribute("type","range");
+					speedRange.setAttribute("min",100);
+					speedRange.setAttribute("max",1000);
+					speedRange.setAttribute("value",300);
+					Pdiv5.appendChild(speedRange);
+					Pdiv5.appendChild(Ph5);
+					Iwin.appendChild(Pdiv5);
+					speedRange.addEventListener("input",function(){speed = speedRange.value},false)
+				}
+				info.addEventListener("click",Info,false);
+				info.setAttribute("id","info");
+				var trade= document.createElement("img");
+				bar.appendChild(trade);
+				trade.setAttribute("src","img/trade.png");
+				var opMoney;
+				var ppMoney;
+				var opLot;
+				var ppLot;
+				//trade
+				function Trade(){
+					var Twin = makeAWindow("trade");
+					Twin.setAttribute("id","Twin");
+					bar.appendChild(Twin);
+					var Tback = document.createElement("img");
+					Tback.setAttribute("src","img/back.png");
+					Tback.setAttribute("class","back");
+					//Tback.style.position="absolute";
+					Twin.appendChild(Tback);
+					Tback.addEventListener("click",function(){bar.removeChild(Twin);},false);
+					var PPic1 = document.createElement("img");
+					var PPic2 = document.createElement("img");
+					var PPic3 = document.createElement("img");
+					var PPic4 = document.createElement("img");
+					PPic1.setAttribute("src","img/p"+(1)+".png");
+					PPic2.setAttribute("src","img/p"+(2)+".png");
+					PPic3.setAttribute("src","img/p"+(3)+".png");
+					PPic4.setAttribute("src","img/p"+(4)+".png");
+					opMoney = 0;
+					ppMoney = 0;
+					opLot=[0];
+					ppLot=[0];
+					function Trading(prtnr){
+						bar.removeChild(document.getElementById("Twin"));
+						function nameExists(value,arr,win){
+							for (var i =0; i<40;i++){
+								if (cell[i].name==value&&(cell[i].owner==(prtnr+1)||cell[i].owner==(currentPlayer%4+1))){
+									arr[arr.length]=cell[i].nmbr;
+									bar.removeChild(win);
+									Trading(prtnr);
+								}
+							}
+						}
+						function AddOpLot(){
+							
+							var LOTwin = makeAWindow("Enter a company");
+							var Toback = document.createElement("img");
+							Toback.setAttribute("src","img/back.png");
+							Toback.style.position="absolute";
+							LOTwin.appendChild(Toback);
+							Toback.addEventListener("click",function(){bar.removeChild(LOTwin);},false);
+							var LOTinput= document.createElement("input");
+							LOTinput.setAttribute("type","text");
+							LOTinput.addEventListener("keyup",function(){ nameExists(LOTinput.value,opLot,LOTwin)}, false);
+							LOTwin.appendChild(LOTinput);
+							bar.appendChild(LOTwin);
+							LOTinput.focus();
+						}
+						function AddOpMoney(){
+							
+							var Moneywin = makeAWindow("Enter an amount");
+							bar.appendChild(Moneywin);
+							var  Minput= document.createElement("input");
+							Moneywin.appendChild(Minput);
+							Minput.setAttribute("type","number");
+							Minput.setAttribute("min","0");
+							Minput.focus();
+							Minput.setAttribute("max",player[currentPlayer%4].balance);
+							var  Msubmit= document.createElement("img");
+							Msubmit.setAttribute("src","img/ok.png");
+							Moneywin.appendChild(Msubmit);
+							Msubmit.addEventListener("click",function(){
+							if ((parseFloat(Minput.value)>0||parseFloat(Minput.value)<=0)&&parseFloat(Minput.value)<=player[currentPlayer%4].balance){}else{return;}
+							opMoney=parseFloat(Minput.value);bar.removeChild(Moneywin);Trading(prtnr);},false);
+						}
+						function AddPpLot(){
+							var LOTwin = makeAWindow("Enter a company");
+							var Toback = document.createElement("img");
+							Toback.setAttribute("src","img/back.png");
+							Toback.style.position="absolute";
+							LOTwin.appendChild(Toback);
+							Toback.addEventListener("click",function(){bar.removeChild(LOTwin);},false);
+							var LOTinput= document.createElement("input");
+							LOTinput.setAttribute("type","text");
+							LOTinput.addEventListener("keyup",function(){ nameExists(LOTinput.value,ppLot,LOTwin)}, false);
+							LOTwin.appendChild(LOTinput);
+							bar.appendChild(LOTwin);
+							LOTinput.focus();
+						}
+						function AddPpMoney(){
+							var Moneywin = makeAWindow("Enter an amount");
+							bar.appendChild(Moneywin);
+							var  Minput= document.createElement("input");
+							Moneywin.appendChild(Minput);
+							Minput.setAttribute("type","number");
+							Minput.setAttribute("min","0");
+							Minput.focus();
+							Minput.setAttribute("max",player[prtnr].balance);
+							var  Msubmit= document.createElement("img");
+							Msubmit.setAttribute("src","img/ok.png");
+							Moneywin.appendChild(Msubmit);
+							Msubmit.addEventListener("click",function(){
+							if ((parseFloat(Minput.value)>0||parseFloat(Minput.value)<=0)&&parseFloat(Minput.value)<=player[prtnr].balance){}else{return;}
+							ppMoney=parseFloat(Minput.value);bar.removeChild(Moneywin); Trading(prtnr);},false);
+						}
+						
+						var Twin = makeAWindow(player[currentPlayer%4].name+" and "+player[prtnr].name);
+						Twin.setAttribute("id","Twin");
+						bar.appendChild(Twin);
+						var Tback = document.createElement("img");
+						Tback.setAttribute("src","img/back.png");
+						Tback.style.position="absolute";
+						Tback.style.top="5%";
+						Tback.style.right="0";
+						Twin.appendChild(Tback);
+						Tback.addEventListener("click",function(){bar.removeChild(Twin);return;},false);
+						var TOpdiv = document.createElement("div");
+						Twin.appendChild(TOpdiv);
+						TOpdiv.style.width="200px";
+						var TPpdiv = document.createElement("div");
+						Twin.appendChild(TPpdiv);
+						TPpdiv.style.width="200px";
+						TPpdiv.style.position="absolute";
+						TPpdiv.style.right="0";
+						TPpdiv.style.top="20%";
+						TPpdiv.style.borderLeft="rgba(255,255,255,0.5) solid";
+						var TOpAddc = document.createElement("h3");
+						TOpdiv.appendChild(TOpAddc);
+						TOpAddc.innerHTML="Add company";
+						TOpAddc.addEventListener("click",AddOpLot,false);
+						var TOpAddm= document.createElement("h3");
+						TOpdiv.appendChild(TOpAddm);
+						TOpAddm.innerHTML="Add money";
+						TOpAddm.addEventListener("click",AddOpMoney,false);
+						var TPpAddc = document.createElement("h3");
+						TPpdiv.appendChild(TPpAddc);
+						TPpAddc.innerHTML="Add company";
+						TPpAddc.addEventListener("click",AddPpLot,false);
+						var TPpAddm= document.createElement("h3");
+						TPpdiv.appendChild(TPpAddm);
+						TPpAddm.innerHTML="Add money";
+						TPpAddm.addEventListener("click",AddPpMoney,false);
+						var TOpMoney= document.createElement("h2");
+						TOpdiv.appendChild(TOpMoney);
+						TOpMoney.innerHTML=opMoney;
+						var TPpMoney= document.createElement("h2");
+						TPpdiv.appendChild(TPpMoney);
+						TPpMoney.innerHTML=ppMoney;
+						for (var y=1;y<opLot.length;y++){
+							var OPpLot= document.createElement("h2");
+							TOpdiv.appendChild(OPpLot);
+							OPpLot.innerHTML=cell[opLot[y]].name;
+						}
+						for (var y=1;y<ppLot.length;y++){
+							var PPpLot= document.createElement("h2");
+							TPpdiv.appendChild(PPpLot);
+							PPpLot.innerHTML=cell[ppLot[y]].name;
+						}
+						function Submit(){
+							if (player[prtnr].ai){
+								opSum=opMoney;
+								for (var m=1;m<opLot.length;m++){
+									opSum+=cell[opLot[m]].price;
+								}
+								ppSum=ppMoney;
+								for (var m=1;m<ppLot.length;m++){
+									ppSum+=cell[ppLot[m]].price;
+								}
+								if (opSum>=ppSum){
+									player[currentPlayer%4].balance-=opMoney;
+									player[currentPlayer%4].balance+=ppMoney;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+									player[prtnr].balance+=opMoney;
+									player[prtnr].balance-=ppMoney;
+									document.getElementById("p"+(prtnr+1)+"cT").innerHTML=player[prtnr].balance.toFixed(2);
+									if (opLot.length>1){
+									for (var m=1;m<opLot.length;m++){
+										cell[opLot[m]].owner=prtnr+1;
+										visC[opLot[m]].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.setAttribute("src","img/"+(prtnr+1)+"lot.png");
+									}}
+									if (ppLot.length>1){
+									for (var u=1;u<ppLot.length;u++){
+										cell[ppLot[u]].owner=currentPlayer%4+1;
+										visC[ppLot[u]].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.setAttribute("src","img/"+(currentPlayer%4+1)+"lot.png");
+									}}
+									ifFull();
+									bar.removeChild(Twin);
+								}else{alert(player[prtnr].name+" does not agree.");}
+							}else{
+								if (confirm(player[prtnr].name+", do you agree?")){
+									player[currentPlayer%4].balance-=opMoney;
+									player[currentPlayer%4].balance+=ppMoney;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+									player[prtnr].balance+=opMoney;
+									player[prtnr].balance-=ppMoney;
+									document.getElementById("p"+(prtnr+1)+"cT").innerHTML=player[prtnr].balance.toFixed(2);
+									if (opLot.length>1){
+									for (var m=1;m<opLot.length;m++){
+										cell[opLot[m]].owner=prtnr+1;
+										visC[opLot[m]].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.setAttribute("src","img/"+(prtnr+1)+"lot.png");
+									}}
+									if (ppLot.length>1){
+									for (var u=1;u<ppLot.length;u++){
+										cell[ppLot[u]].owner=currentPlayer%4+1;
+										visC[ppLot[u]].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.setAttribute("src","img/"+(currentPlayer%4+1)+"lot.png");
+									}}
+									ifFull();
+									bar.removeChild(Twin);
+								}
+							}
+						}
+						var  Tsubmit= document.createElement("img");
+						Tsubmit.setAttribute("src","img/ok.png");
+						Twin.appendChild(Tsubmit);
+						Tsubmit.style.position="relative";
+						Tsubmit.addEventListener("click",Submit,false);
+					}
+					if (currentPlayer%4!=0){
+						Twin.appendChild(PPic1);
+						PPic1.addEventListener("click",function(){Trading(0)},false);
+					}
+					if (currentPlayer%4!=1){
+						Twin.appendChild(PPic2);
+						PPic2.addEventListener("click",function(){Trading(1)},false);
+					}
+					if (currentPlayer%4!=2){
+						Twin.appendChild(PPic3);
+						PPic3.addEventListener("click",function(){Trading(2)},false);
+					}
+					if (currentPlayer%4!=3){
+						Twin.appendChild(PPic4);
+						PPic4.addEventListener("click",function(){Trading(3)},false);
+					}
+				}
+				
+				trade.setAttribute("id","trade");
+				var manage = document.createElement("img");
+				bar.appendChild(manage);
+				manage.setAttribute("src","img/manage.png");
+				var n;//I don't remember what it is. 
+				//cell,operation(+/-1), department(string)
+				function deal(dep,y,depa){
+						
+						if (y==1){
+							if (depa=="c"){
+								if (dep.rd+dep.pr+dep.hr==3&&dep.c==0){
+									dep.c++;
+									var imgD = document.createElement("img");
+									imgD.setAttribute("src","img/"+depa+".png");
+									visC[dep.nmbr].appendChild(imgD);
+									visC[dep.nmbr].removeChild(document.getElementById("hr"+dep.nmbr));
+									visC[dep.nmbr].removeChild(document.getElementById("rd"+dep.nmbr));
+									visC[dep.nmbr].removeChild(document.getElementById("pr"+dep.nmbr));
+									imgD.setAttribute("id",depa+dep.nmbr);
+									imgD.setAttribute("class","c");
+									player[currentPlayer%4].balance-=dep.cP;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+								}else return;
+							}else{
+								if (depa=="hr"){
+									if (dep.hr==0){
+									dep.hr++;
+									var imgD = document.createElement("img");
+									imgD.setAttribute("src","img/"+depa+".png");
+									visC[dep.nmbr].appendChild(imgD);
+									imgD.setAttribute("class","hr");
+									imgD.setAttribute("id",depa+dep.nmbr);
+									player[currentPlayer%4].balance-=dep.hrP;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);}
+									else return;
+								}else{if(depa=="pr"){
+									if (dep.pr==0){
+									dep.pr++;
+									var imgD = document.createElement("img");
+									imgD.setAttribute("src","img/"+depa+".png");
+									visC[dep.nmbr].appendChild(imgD);
+									imgD.setAttribute("class","pr");
+									imgD.setAttribute("id",depa+dep.nmbr);
+									player[currentPlayer%4].balance-=dep.prP;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);}
+									else return;
+								}else{
+									if (dep.rd==0){
+									dep.rd++;
+									var imgD = document.createElement("img");
+									imgD.setAttribute("src","img/"+depa+".png");
+									imgD.setAttribute("class","rd");
+									visC[dep.nmbr].appendChild(imgD);
+									imgD.setAttribute("id",depa+dep.nmbr);
+									player[currentPlayer%4].balance-=dep.rdP;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);}
+									else return;
+									
+								}
+								
+							}}
+						}else{
+							if (depa=="c"){
+								if (dep.rd+dep.pr+dep.hr==3&&dep.c==1){
+									dep.c--;
+									visC[dep.nmbr].removeChild(document.getElementById(depa+dep.nmbr));
+									var imgD = document.createElement("img");
+									imgD.setAttribute("src","img/"+"rd"+".png");
+									visC[dep.nmbr].appendChild(imgD);
+									imgD.setAttribute("id","rd"+dep.nmbr);
+									var imgD = document.createElement("img");
+									imgD.setAttribute("src","img/"+"pr"+".png");
+									visC[dep.nmbr].appendChild(imgD);
+									imgD.setAttribute("id","pr"+dep.nmbr);
+									var imgD = document.createElement("img");
+									imgD.setAttribute("src","img/"+"hr"+".png");
+									visC[dep.nmbr].appendChild(imgD);
+									imgD.setAttribute("id","hr"+dep.nmbr);
+									player[currentPlayer%4].balance+=dep.cP*0.9;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+								}else{return;}
+							}else{
+								if (dep.c==1)return;
+								if (depa=="hr"){
+									
+									if (dep.hr==1){
+									dep.hr--;
+									visC[dep.nmbr].removeChild(document.getElementById(depa+dep.nmbr));
+									player[currentPlayer%4].balance+=dep.hrP*0.9;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);}
+									else return;
+								}else{if(depa=="pr"){
+									
+									if (dep.pr==1){
+									dep.pr--;
+									visC[dep.nmbr].removeChild(document.getElementById(depa+dep.nmbr));
+									player[currentPlayer%4].balance+=dep.prP*0.9;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);}
+									else return;
+								}else{
+									if (dep.rd==1){
+									dep.rd--;
+									visC[dep.nmbr].removeChild(document.getElementById(depa+dep.nmbr));
+									player[currentPlayer%4].balance+=dep.rdP*0.9;
+									document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);}
+									else return;
+									}}}
+								}
+							if (player[currentPlayer%4].ai==false){
+							bar.removeChild(document.getElementById("Mwin"));
+							Manage();	
+							}
+						}
+				function Manage(){
+					function Mrtgd(lot){
+						if (lot.mrtgd){
+							player[currentPlayer%4].balance-=lot.price*1.1;
+							document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+							lot.mrtgd=false;
+							visC[lot.nmbr].style.backgroundColor="white";
+							
+						}else{
+							player[currentPlayer%4].balance+=lot.price*0.9;
+							document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=player[currentPlayer%4].balance.toFixed(2);
+							lot.mrtgd=true;
+							visC[lot.nmbr].style.backgroundColor="pink";
+						}
+						bar.removeChild(document.getElementById("Mwin"));
+						Manage();
+					}
+					
+					var Mwin=makeAWindow("Manage");
+					var Mback = document.createElement("img");
+					Mback.setAttribute("src","img/back.png");
+					Mback.style.position="absolute";
+					Mwin.appendChild(Mback);
+					function MBack(){
+						bar.removeChild(Mwin);
+					}
+					Mback.addEventListener("click",MBack,false);
+					var ownedCell=[];
+					bar.appendChild(Mwin);
+					Mwin.setAttribute("id","Mwin");
+					for (var f=0;f<cell.length;f++){
+							if (cell[f].owner==currentPlayer%4+1)
+								ownedCell[ownedCell.length]=f;
+						}
+					if (ownedCell.length==0)
+						return;
+					function next(){
+						if (n<ownedCell.length-1)
+							n++;
+						bar.removeChild(document.getElementById("Mwin"));
+						Manage();
+					}
+					function past(){
+						if (n>0)
+							n--;
+						bar.removeChild(document.getElementById("Mwin"));
+						Manage();
+					}				
+					//for (var q=0; q<ownedCell.length;q++){
+					
+						var Mdiv = document.createElement("div");
+						Mwin.appendChild(Mdiv);
+						var Mname = document.createElement("h2");
+						Mname.innerHTML=cell[ownedCell[n]].name;
+						Mdiv.appendChild(Mname);
+						var Mpic = document.createElement("img");
+						Mpic.setAttribute("src",cell[ownedCell[n]].img);
+						Mdiv.appendChild(Mpic);
+						var Mtab = document.createElement("table");
+						var Mtr1 = document.createElement("tr");
+						Mdiv.appendChild(Mtab);
+						Mtab.appendChild(Mtr1);
+						var Mtd13 = document.createElement("td");
+						if (cell[ownedCell[n]].mrtgd)
+						Mtd13.innerHTML="unmortage";
+						else
+						Mtd13.innerHTML="mortage";
+						Mtr1.appendChild(Mtd13);
+						var obj = cell[ownedCell[n]];
+						Mtd13.addEventListener("click",function(){Mrtgd(obj)},false);
+						if (cell[ownedCell[n]].fullset&&ownedCell[n]!=5&&ownedCell[n]!=15&&ownedCell[n]!=25&&ownedCell[n]!=35&&ownedCell[n]!=28&&ownedCell[n]!=12){
+							var Mtr2 = document.createElement("tr");
+							var Mtr3 = document.createElement("tr");
+							var Mtr4 = document.createElement("tr");
+							var Mtr5 = document.createElement("tr");
+							Mtab.appendChild(Mtr2);
+							Mtab.appendChild(Mtr3);
+							Mtab.appendChild(Mtr4);
+							Mtab.appendChild(Mtr5);
+							var Mtd1 = document.createElement("td");
+							Mtd1.innerHTML="+";
+							var Mtd2 = document.createElement("td");
+							Mtd2.innerHTML="Research&Development("+cell[ownedCell[n]].rdP+")";
+							var Mtd3 = document.createElement("td");
+							Mtd3.innerHTML="-";
+							Mtr2.appendChild(Mtd1);
+							Mtr2.appendChild(Mtd2);
+							Mtr2.appendChild(Mtd3);
+							var Mtd4 = document.createElement("td");
+							Mtd4.innerHTML="+";
+							var Mtd5 = document.createElement("td");
+							Mtd5.innerHTML="Production("+cell[ownedCell[n]].prP+")";
+							var Mtd6 = document.createElement("td");
+							Mtd6.innerHTML="-";
+							Mtr3.appendChild(Mtd4);
+							Mtr3.appendChild(Mtd5);
+							Mtr3.appendChild(Mtd6);
+							var Mtd7 = document.createElement("td");
+							Mtd7.innerHTML="+";
+							var Mtd8 = document.createElement("td");
+							Mtd8.innerHTML="Human Resources("+cell[ownedCell[n]].hrP+")";
+							var Mtd9 = document.createElement("td");
+							Mtd9.innerHTML="-";
+							Mtr4.appendChild(Mtd7);
+							Mtr4.appendChild(Mtd8);
+							Mtr4.appendChild(Mtd9);
+							var Mtd10 = document.createElement("td");
+							Mtd10.innerHTML="+";
+							var Mtd11 = document.createElement("td");
+							Mtd11.innerHTML="Corparation("+cell[ownedCell[n]].cP+")";
+							var Mtd12 = document.createElement("td");
+							Mtd12.innerHTML="-";
+							Mtr5.appendChild(Mtd10);
+							Mtr5.appendChild(Mtd11);
+							Mtr5.appendChild(Mtd12);							
+							
+							Mtd1.addEventListener("click",function(){deal(obj,1,"rd")},false);
+							Mtd4.addEventListener("click",function(){deal(obj,1,"pr")},false);
+							Mtd7.addEventListener("click",function(){deal(obj,1,"hr")},false);
+							Mtd10.addEventListener("click",function(){deal(obj,1,"c")},false);
+							Mtd3.addEventListener("click",function(){deal(obj,-1,"rd")},false);
+							Mtd6.addEventListener("click",function(){deal(obj,-1,"pr")},false);
+							Mtd9.addEventListener("click",function(){deal(obj,-1,"hr")},false);
+							Mtd12.addEventListener("click",function(){deal(obj,-1,"c")},false);
+							
+						}
+						var Mtr0 = document.createElement("tr");
+						Mtab.appendChild(Mtr0);
+						var Mtd14 = document.createElement("td");
+						var Mtd15 = document.createElement("td");
+						
+						Mtd14.innerHTML="prev.";
+						Mtd15.innerHTML="next";
+						Mtr0.appendChild(Mtd14);
+						Mtr0.appendChild(Mtd15);
+						Mtd14.addEventListener("click",function(){past()},false);
+						Mtd15.addEventListener("click",function(){next()},false);
+					
+				}
+				
+				manage.setAttribute("id","manage");
+				var save= document.createElement("img");
+				bar.appendChild(save);
+				save.setAttribute("src","img/save.png");
+				function SaveW(){
+					Save();
+					var Swin = makeAWindow("Saved");
+					bar.appendChild(Swin);
+					var Sback = document.createElement("img");
+					Sback.setAttribute("src","img/ok.png");
+					Sback.style.position="relative";
+					Swin.appendChild(Sback);
+					Sback.addEventListener("click",function(){bar.removeChild(Swin);},false);
+					var Spre = document.createElement("pre");
+					var Stext = document.createElement("p");
+					Stext.appendChild(Spre);
+					Swin.appendChild(Stext);
+					Spre.innerHTML="New awsome feature.";
+					
+				}
+				
+				save.setAttribute("id","save");
+				//
+				//Bar-center elements
+				//
+				var speed = 300;
+				var p1c = document.createElement("img");
+				var p2c = document.createElement("img");
+				var p3c = document.createElement("img");
+				var p4c = document.createElement("img");
+				p1c.setAttribute("src","img/player1.png");
+				p2c.setAttribute("src","img/player2.png");
+				p3c.setAttribute("src","img/player3.png");
+				p4c.setAttribute("src","img/player4.png");
+				p1c.setAttribute("class","p1c");
+				p2c.setAttribute("class","p2c");
+				p3c.setAttribute("class","p3c");
+				p4c.setAttribute("class","p4c");
+				var p1ct = document.createTextNode(player[0].balance);
+				var p2ct= document.createTextNode(player[1].balance);
+				var p3ct= document.createTextNode(player[2].balance);
+				var p4ct= document.createTextNode(player[3].balance);
+				var p1cT = document.createElement("h1");
+				var p2cT = document.createElement("h1");
+				var p3cT = document.createElement("h1");
+				var p4cT = document.createElement("h1");
+				p1cT.appendChild(p1ct);
+				p2cT.appendChild(p2ct);
+				p3cT.appendChild(p3ct);
+				p4cT.appendChild(p4ct);
+				p1cT.setAttribute("id","p1cT");
+				p2cT.setAttribute("id","p2cT");
+				p3cT.setAttribute("id","p3cT");
+				p4cT.setAttribute("id","p4cT");
+				
+				bar.appendChild(p1c);
+				bar.appendChild(p2c);
+				
+				bar.appendChild(p3c);
+				bar.appendChild(p4c);
+				bar.appendChild(p1cT);
+				bar.appendChild(p2cT);
+				bar.appendChild(p3cT);
+				bar.appendChild(p4cT);
+				
+				function Evaluate(){
+					var rentV = document.createElement("h2");
+					bar.appendChild(rentV);
+					rentV.setAttribute("id","rentV");
+					var rentTime = window.setTimeout(function(){bar.removeChild(rentV);},speed*2);
+					if (cell[player[currentPlayer%4].position%40].groupn==10){
+						if(cell[player[currentPlayer%4].position%40].fullset){
+							var result = 0.3*Math.floor(Math.random()*12+2);
+							rentV.innerHTML=result.toFixed(2);
+							return result;
+						}else{ 
+							var result = 0.1*Math.floor(Math.random()*12+2);
+							rentV.innerHTML=result.toFixed(2);
+							return result;
+						}
+					}else{
+					if (cell[player[currentPlayer%4].position%40].groupn==9){
+						if(cell[player[currentPlayer%4].position%40].fullset){
+							rentV.innerHTML="7".toFixed(2);
+							return 7;
+						}else{ 
+							var rails =0;
+							for (var z=5;z<40;z+=10){
+								if (cell[z].owner==cell[player[currentPlayer%4].position%40].owner)
+									rails++;
+							}
+							rentV.innerHTML=rails==3?5:rails==2?3:1;
+							return rails==3?5:rails==2?3:1;
+						}
+					}else{	
+					var bonus = cell[player[currentPlayer%4].position%40].hr+cell[player[currentPlayer%4].position%40].rd+cell[player[currentPlayer%4].position%40].c;
+					rentV.innerHTML=(cell[player[currentPlayer%4].position%40].price*0.1*(bonus==0?1:bonus==1?3:bonus==2?7:15)).toFixed(2);
+					return cell[player[currentPlayer%4].position%40].price*0.1*(bonus==0?1:bonus==1?3:bonus==2?7:15);
+					}}
+				}
+				function makeAWindow(title){
+					var Wdiv = document.createElement("div");
+					var Wtitle = document.createElement("h2");
+					var WtitleT = document.createTextNode(title);
+					Wtitle.appendChild(WtitleT);
+					Wdiv.appendChild(Wtitle);
+					Wtitle.style.backgroundColor="rgba(255,255,255,1)";
+					Wdiv.setAttribute("class","window");
+					
+					return Wdiv;
+				}
+				//buy
+				function buy (win,plr,lot){
+					if (plr.balance<lot.price){
+						alert(plr.name+" doesn't have enough money.");
+						return;
+					}
+					plr.balance-=lot.price;
+					document.getElementById("p"+(currentPlayer%4+1)+"cT").innerHTML=plr.balance.toFixed(2);
+					lot.owner=plr.plrnmbr;
+					visC[lot.nmbr].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.setAttribute("src","img/"+plr.plrnmbr+"lot.png");
+					ifFull();
+					if (player[currentPlayer%4].ai)
+						End();
+					else
+						bar.removeChild(win);
+				}
+				var passed;
+				var currentAmount;
+				var forfeited;
+				var acp;//Auction current player
+				//auction
+				function Auction(win,oldCurrentAmount,oldPassed,oldForfeited,oldAcp){
+					var lot = cell[player[currentPlayer%4].position%40];
+					var Awin = makeAWindow(lot.name);
+					var AiWon=false;
+					function Forfeited(){
+						ifForfeited = false;
+						for (var o = 1;o<forfeited.length;o++){
+							if (forfeited[o]==acp%4)
+								ifForfeited=true;
+						}
+						return ifForfeited;
+					}
+					function Pass(){
+						passed++;
+						if (passed+forfeited.length==player.length){
+							do{acp++;}while (Forfeited())
+							player[acp%4].balance-=currentAmount;
+							document.getElementById("p"+(acp%4+1)+"cT").innerHTML=player[acp%4].balance.toFixed(2);
+							lot.owner=acp%4+1;
+							visC[lot.nmbr].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.setAttribute("src","img/"+(acp%4+1)+"lot.png");
+							ifFull();
+							bar.removeChild(Awin);
+							AiWon=true;
+						}else{
+						if(Awin.parentNode!==null)
+						bar.removeChild(Awin);
+						do {acp++;} while (Forfeited());
+						Auction(null,currentAmount,passed,forfeited,acp);}
+					}
+					
+					function Up(){
+						passed=0;
+						var Uwin = makeAWindow("Bid");
+						bar.appendChild(Uwin);
+						var Uinput = document.createElement("input");
+						Uwin.appendChild(Uinput);
+						Uinput.setAttribute("type","number");
+						Uinput.setAttribute("min",currentAmount);
+						Uinput.setAttribute("max",player[acp%4].balance);
+						var  Usubmit= document.createElement("img");
+						Usubmit.setAttribute("src","img/ok.png");
+						Uwin.appendChild(Usubmit);
+						Usubmit.addEventListener("click",function(){if ((Uinput.value>0||Uinput.value<=0)&&Uinput.value>currentAmount&&Uinput.value<=player[acp%4].balance){}else{return;} currentAmount=Uinput.value;do {acp++;} while (Forfeited());bar.removeChild(Uwin);if (Awin!=null) bar.removeChild(Awin);Auction(null,currentAmount,passed,forfeited,acp);},false);
+					}
+					function Forfeit(){
+						if(forfeited.length==3)
+						return;
+						forfeited[forfeited.length]=acp%4;
+						bar.removeChild(Awin);
+						do {acp++;} while (Forfeited());
+						Auction(null,currentAmount,passed,forfeited,acp);
+					}
+					currentAmount=oldCurrentAmount;
+					passed=oldPassed;
+					acp = oldAcp;//(currentPlayer+1)%4;
+					forfeited = oldForfeited;
+					if (win!=null&&!player[currentPlayer%4].ai){
+					bar.removeChild(win);}
+					bar.appendChild(Awin);
+					var Aplr = document.createElement("h2");
+					Aplr.innerHTML=player[acp%4].name+", what do you think?"
+					Awin.appendChild(Aplr);
+					var Apic = document.createElement("img");
+					Apic.setAttribute("src",lot.img);
+					Awin.appendChild(Apic);
+					var Atext = document.createElement("p");
+					var Apre = document.createElement("pre");
+					var AtextN = document.createTextNode("Market value is "+cell[player[currentPlayer%4].position%40].price+
+												".\n\n"+cell[player[currentPlayer%4].position%40].fact+"\n\nresearch&development - "+
+												cell[player[currentPlayer%4].position%40].rdP+"\nproduction - "+cell[player[currentPlayer%4].position%40].prP+
+												"\nhuman resources - "+cell[player[currentPlayer%4].position%40].hrP+"\ncorporation - "+cell[player[currentPlayer%4].position%40].cP);
+					Apre.appendChild(AtextN);
+					Atext.appendChild(Apre);
+					Awin.appendChild(Atext);
+					var Aup = document.createElement("img");
+					Aup.setAttribute("src","img/up.png");
+					Awin.appendChild(Aup);
+					var Apass = document.createElement("img");
+					Apass.setAttribute("src","img/pass.png");
+					Awin.appendChild(Apass);
+					var Aforf = document.createElement("img");
+					Aforf.setAttribute("src","img/forfeit.png");
+					Awin.appendChild(Aforf);
+					Aforf.addEventListener("click",Forfeit,false);
+					Aup.addEventListener("click",Up,false);
+					Apass.addEventListener("click",Pass,false);
+					if (player[acp%4].ai){
+						upAmount = Math.floor(Math.random()*10+1);
+						if (currentAmount+upAmount<player[acp%4].balance&&currentAmount+upAmount<lot.price){
+							bar.removeChild(Awin);
+							passed=0;
+							currentAmount+=upAmount;
+							do {acp++;} while (Forfeited());
+							Auction(null,currentAmount,passed,forfeited,acp);
+						}else
+						Pass();
+					}
+					if (AiWon) {End();return;}
+				}
+				//is full?
+				function ifFull(){
+					var set = [[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]];
+					for (var groupNumber=0;groupNumber<11;groupNumber++){
+						for(var w=0;w<40;w++){
+							if (cell[w].groupn==groupNumber)
+								set[groupNumber][set[groupNumber].length]=cell[w].nmbr;
+						}
+						full=true;
+						for(var e=1;e<set[groupNumber].length-1;e++){
+							if (cell[set[groupNumber][e]].owner!=cell[set[groupNumber][e+1]].owner)
+								full=false;
+						}
+						if (full==true){
+							for(var e=1;e<set[groupNumber].length;e++){
+								cell[set[groupNumber][e]].fullset=true;
+								//ai manages its facilities
+								if(player[currentPlayer%4].ai&&cell[set[groupNumber][e]].owner==(currentPlayer%4+1)&&groupNumber!=10&&groupNumber!=9){
+									if(player[currentPlayer%4].balance>cell[set[groupNumber][e]].rdP){
+										deal(cell[set[groupNumber][e]],1,"rd");
+									}
+									if(player[currentPlayer%4].balance>cell[set[groupNumber][e]].hrP){
+										deal(cell[set[groupNumber][e]],1,"hr");
+									}
+									if(player[currentPlayer%4].balance>cell[set[groupNumber][e]].prP){
+										deal(cell[set[groupNumber][e]],1,"pr");
+									}
+									if(player[currentPlayer%4].balance>cell[set[groupNumber][e]].cP){
+										deal(cell[set[groupNumber][e]],1,"c");
+									}
+								}
+							}
+						}else{
+							for(var e=1;e<set[groupNumber].length;e++){
+								cell[set[groupNumber][e]].fullset=false;
+							}
+						}
+					}
+					
+				}
+				/*
+				function cleaner(from,what){
+				from.removeChild(what);
+				}
+				*/
+				var pPic=[0];
+				for(var q=0;q<player.length;q++){
+					pPic[q] = document.createElement("img");
+					pPic[q].setAttribute("src","img/p"+(q+1)+".png");
+					//pPic[q].setAttribute("class","p"+(q+1)+"oc");
+					visC[0].appendChild(pPic[q]);
+				}
+				var db = window.localStorage;
+				//welcome window
+					var Wwin = makeAWindow("Welcome");
+					bar.appendChild(Wwin);
+					var Wok = document.createElement("img");
+					Wok.setAttribute("src","img/ok.png");
+					Wok.addEventListener("click",function(){bar.removeChild(Wwin); End();},false);
+					var Wpre = document.createElement("pre");
+					var Wtext = document.createElement("p");
+					Wtext.appendChild(Wpre);
+					if (db.exist==1)
+					Wwin.appendChild(Wtext);
+					Wpre.innerHTML="Click here to continue.";
+					var PPic1 = document.createElement("img");
+					var PPic2 = document.createElement("img");
+					var PPic3 = document.createElement("img");
+					var PPic4 = document.createElement("img");
+					var Pdiv1 = document.createElement("div");
+					var Pdiv2 = document.createElement("div");
+					var Pdiv3 = document.createElement("div");
+					var Pdiv4 = document.createElement("div");
+					
+					var Ph1 = document.createElement("h2");
+					var Ph2 = document.createElement("h2");
+					var Ph3 = document.createElement("h2");
+					var Ph4 = document.createElement("h2");
+					
+					Ph1.innerHTML="human";
+					Ph2.innerHTML="human";
+					Ph3.innerHTML="human";
+					Ph4.innerHTML="human";
+					
+					PPic1.setAttribute("src","img/p"+(1)+".png");
+					PPic2.setAttribute("src","img/p"+(2)+".png");
+					PPic3.setAttribute("src","img/p"+(3)+".png");
+					PPic4.setAttribute("src","img/p"+(4)+".png");
+					Pdiv1.appendChild(PPic1);
+					Pdiv2.appendChild(PPic2);
+					Pdiv3.appendChild(PPic3);
+					Pdiv4.appendChild(PPic4);
+					Pdiv1.appendChild(Ph1);
+					Pdiv2.appendChild(Ph2);
+					Pdiv3.appendChild(Ph3);
+					Pdiv4.appendChild(Ph4);
+					
+					Wwin.appendChild(Pdiv1);
+					Wwin.appendChild(Pdiv2);
+					Wwin.appendChild(Pdiv3);
+					Wwin.appendChild(Pdiv4);
+					
+					Pdiv1.addEventListener("click",function(){ChangeI(0,Ph1);},false);
+					Pdiv2.addEventListener("click",function(){ChangeI(1,Ph2);},false);
+					Pdiv3.addEventListener("click",function(){ChangeI(2,Ph3);},false);
+					Pdiv4.addEventListener("click",function(){ChangeI(3,Ph4);},false);
+					Wtext.addEventListener("click",function(){Load();bar.removeChild(Wwin);},false);
+					function ChangeI(playerNum,h2){
+						player[playerNum].ai=player[playerNum].ai?false:true;
+						h2.innerHTML=player[playerNum].ai?"ai":"human";
+					}
+					Wwin.appendChild(Wok);
+			//save
+			
+			function Save(){
+				db.setItem("exist",1);
+				db.setItem("currentPlayer",currentPlayer);
+				db.setItem("lockDice",lockDice);
+				db.setItem("speed",speed);
+				db.setItem("lostLength",lost.legth);
+				for (var y = 0; y<lost.length;y++){
+					db.setItem("lost"+y,lost[y]);
+				}
+				for (var y=0;y<player.length;y++){
+					db.setItem("player"+y+"position",player[y].position);
+					db.setItem("player"+y+"balance",player[y].balance);
+					db.setItem("player"+y+"ai",player[y].ai);
+					db.setItem("player"+y+"free",player[y].free);
+					db.setItem("player"+y+"card",player[y].card);
+					db.setItem("player"+y+"term",player[y].term);
+				}// owner rd pr hr c mrtgd fullset
+				for (var y=0;y<cell.length;y++){
+					db.setItem("cell"+y+"owner",cell[y].owner);
+					db.setItem("cell"+y+"rd",cell[y].rd);
+					db.setItem("cell"+y+"pr",cell[y].pr);
+					db.setItem("cell"+y+"hr",cell[y].hr);
+					db.setItem("cell"+y+"c",cell[y].c);
+					db.setItem("cell"+y+"mrtgd",cell[y].mrtgd);
+					db.setItem("cell"+y+"fullset",cell[y].fullset);
+				}
+			}
+			function Load(){
+				currentPlayer=db.getItem("currentPlayer");
+				lockDice=parseInt(db.getItem("lockDice"));
+				speed = parseInt(db.getItem("speed"));
+				for (var y = 0; y<db.getItem("lostLength");y++){
+					lost[y]=db.getItem("lost"+y);
+				}
+				for (var y=0;y<player.length;y++){
+					player[y].position=parseInt(db.getItem("player"+y+"position"));
+					player[y].balance=parseFloat(db.getItem("player"+y+"balance"));
+					player[y].ai=db.getItem("player"+y+"ai")==="true"?true:false;
+					player[y].free=db.getItem("player"+y+"free")==="true"?true:false;
+					player[y].card=parseInt(db.getItem("player"+y+"card"));
+					player[y].term=parseInt(db.getItem("player"+y+"term"));
+					visC[0].removeChild(pPic[y]);
+					visC[player[y].position%40].appendChild(pPic[y]);
+					document.getElementById("p"+(y+1)+"cT").innerHTML=player[y].balance>0?player[y].balance.toFixed(2):"broke";
+				}// owner rd pr hr c mrtgd fullset
+				for (var y=0;y<cell.length;y++){
+					cell[y].owner=parseInt(db.getItem("cell"+y+"owner"));
+					cell[y].rd=parseInt(db.getItem("cell"+y+"rd"));
+					cell[y].pr=parseInt(db.getItem("cell"+y+"pr"));
+					cell[y].hr=parseInt(db.getItem("cell"+y+"hr"));
+					cell[y].c=parseInt(db.getItem("cell"+y+"c"));
+					cell[y].mrtgd=db.getItem("cell"+y+"mrtgd")==="true"?true:false;
+					cell[y].fullset=db.getItem("cell"+y+"fullset")==="true"?true:false;
+					visC[y].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.setAttribute("src","img/"+cell[y].owner+"lot.png");
+					if (cell[y].mrtgd) {
+						visC[y].style.backgroundColor="pink";}
+					if (cell[y].c==1){
+						var imgD = document.createElement("img");
+						imgD.setAttribute("src","img/c.png");
+						visC[y].appendChild(imgD);
+						imgD.setAttribute("id","c"+y);
+						imgD.setAttribute("class","c");
+					}else{
+					if (cell[y].rd==1){
+						var imgD = document.createElement("img");
+						imgD.setAttribute("src","img/rd.png");
+						visC[y].appendChild(imgD);
+						imgD.setAttribute("id","rd"+y);
+						imgD.setAttribute("class","rd");
+					}
+					if (cell[y].pr==1){
+						var imgD = document.createElement("img");
+						imgD.setAttribute("src","img/pr.png");
+						visC[y].appendChild(imgD);
+						imgD.setAttribute("id","pr"+y);
+						imgD.setAttribute("class","pr");
+					}
+					if (cell[y].hr==1){
+						var imgD = document.createElement("img");
+						imgD.setAttribute("src","img/hr.png");
+						visC[y].appendChild(imgD);
+						imgD.setAttribute("id","hr"+y);
+						imgD.setAttribute("class","hr");
+					}
+					}
+				}
+				alert(player[currentPlayer%4].name+", your turn.");
+			}
+			
+
+	</script>
+</body>
+</html>

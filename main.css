@@ -1,0 +1,143 @@
+body{background-color:#262A40;
+	margin:0;
+	margin-left:8%;
+	padding:0;
+	text-align:center;
+	font-weight:bold;
+	font-family:georgia;
+	perspective:4000;
+	perspective-origin: 33% 25%;
+	-webkit-perspective:4000; /* Safari and Chrome */
+	-webkit-perspective-origin: 33% 25%; /* Safari and Chrome */
+}
+			.cell{background-color:rgba(255,255,255,1);
+			display:block;
+			border-style: solid;
+			border-width: 1px;
+			position:relative;
+			}
+			.left{transform:rotate(90deg);
+				-ms-transform:rotate(90deg); /* IE 9 */
+				-moz-transform:rotate(90deg); /* Firefox */
+				-webkit-transform:rotate(90deg); /* Safari and Chrome */
+				-o-transform:rotate(90deg); /* Opera */}
+			.right{transform:rotate(-90deg);
+				-ms-transform:rotate(-90deg); /* IE 9 */
+				-moz-transform:rotate(-90deg); /* Firefox */
+				-webkit-transform:rotate(-90deg); /* Safari and Chrome */
+				-o-transform:rotate(-90deg); /* Opera */}
+
+			.top{transform:rotate(180deg);
+				-ms-transform:rotate(180deg); /* IE 9 */
+				-moz-transform:rotate(180deg); /* Firefox */
+				-webkit-transform:rotate(180deg); /* Safari and Chrome */
+				-o-transform:rotate(180deg); /* Opera */}
+			.tl{transform:rotate(135deg);
+				-ms-transform:rotate(135deg); /* IE 9 */
+				-moz-transform:rotate(135deg); /* Firefox */
+				-webkit-transform:rotate(135deg); /* Safari and Chrome */
+				-o-transform:rotate(135deg); /* Opera */}
+			.tr{transform:rotate(225deg);
+				-ms-transform:rotate(225deg); /* IE 9 */
+				-moz-transform:rotate(225deg); /* Firefox */
+				-webkit-transform:rotate(225deg); /* Safari and Chrome */
+				-o-transform:rotate(225deg); /* Opera */}
+			.bl{transform:rotate(-45deg);
+				-ms-transform:rotate(-45deg); /* IE 9 */
+				-moz-transform:rotate(-45deg); /* Firefox */
+				-webkit-transform:rotate(-45deg); /* Safari and Chrome */
+				-o-transform:rotate(-45deg); /* Opera */}
+			.br{transform:rotate(45deg);
+				-ms-transform:rotate(45deg); /* IE 9 */
+				-moz-transform:rotate(45deg); /* Firefox */
+				-webkit-transform:rotate(45deg); /* Safari and Chrome */
+				-o-transform:rotate(45deg); /* Opera */}
+			#map{
+				transform: rotateX(45deg) rotateZ(0deg);
+				-webkit-transform: rotateX(45deg) rotateZ(0deg);
+				}
+			#leftRot{
+				position:absolute;
+				left:1px;
+				top:1px;
+			}
+			#rightRot{
+				position:absolute;
+				right:-74px;
+				bottom:-74px;
+			}
+			#roll{
+				position:absolute;
+				left:0;
+				bottom:0;
+			}
+			#end{
+				position:absolute;
+				right:0;
+				top:0;
+			}
+			#bar{position:absolute;
+				padding:0;
+				background-color:#454C59;
+				color:white;
+				transform: rotateZ(0deg);
+				-webkit-transform:rotateZ(0deg);
+				}
+			#info{position:absolute;left:0;top:153px;}
+			#save{position:absolute;left:153px;top:0;}
+			#manage{position:absolute;right:153px;bottom:0;}
+			#trade{position:absolute;right:0;bottom:152px;}
+			
+			.p1c{position:absolute;right:50%;bottom:50%;}
+			.p2c{position:absolute;right:50%;top:50%;}
+			.p3c{position:absolute;left:50%;bottom:50%;}
+			.p4c{position:absolute;left:50%;top:50%;}
+			
+			#p1cT{position:absolute;right:53%;bottom:50%; display:inline;color:black;}
+			#p2cT{position:absolute;right:53%;top:50%;display:inline;color:black;}
+			#p3cT{position:absolute;left:53%;bottom:50%;display:inline;color:black;}
+			#p4cT{position:absolute;left:53%;top:50%;display:inline;color:black;}
+			
+			.window{
+				font-size:120%;
+				position:relative;
+				left:0;
+				right:0;
+				margin-left:auto;
+				margin-right:auto;
+				width:400px;
+				background-color:rgba(255,255,255,0.75);
+				color:black;
+				top: -30px;
+				border:1px solid;
+				border-radius:30px;
+			}
+			
+			tr{display:block;}
+			table{margin-left: auto;
+					margin-right: auto;
+					font-size:150%;}
+			td{background-color:rgba(255,255,255,0.25);}
+			h3{background-color:rgba(255,255,255,0.25);}
+			.c{position: absolute;top: 20px;left:30px;}
+			.rd{position: absolute;top: 20px;left:10px;}
+			.hr{position:absolute;top: 20px;right:10px;}
+			.pr{position: absolute;top: 60px;left:30px;}
+			.back{position:absolute; right:0;}
+			.price{position:absolute;top:60px;left:40px;background-color:rgba(200,200,200,0.5);font-size:1em}
+			#dice1v{position:absolute;font-size:5em;left:80px;bottom:55px;}
+			#dice2v{position:absolute;font-size:5em;left:175px;bottom:-35px;}
+			#nextPlayer{top:25%;}
+			#speed{font-size:70%;}
+			#rentV{position:relative;
+				left:0;
+				right:0;
+				margin-left:auto;
+				margin-right:auto;
+				width:10%;
+				top:29%;
+				display:block;
+				color:black;
+				background-color:rgba(255,255,255,0.25);
+			}
+			
